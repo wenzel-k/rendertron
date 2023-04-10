@@ -39,6 +39,9 @@ export type Config = {
   renderOnly: Array<string>;
   closeBrowser: boolean;
   restrictedUrlPattern: string | null;
+ 
+  disableShimCssProperties: boolean;
+  wkmDebug: boolean;
 };
 
 export class ConfigManager {
