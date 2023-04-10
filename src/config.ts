@@ -40,8 +40,8 @@ export type Config = {
   closeBrowser: boolean;
   restrictedUrlPattern: string | null;
  
-  disableShimCssProperties: boolean;
-  wkmDebug: boolean;
+  disableShimCssProperties?: boolean;
+  wkmDebug?: boolean;
 };
 
 export class ConfigManager {
