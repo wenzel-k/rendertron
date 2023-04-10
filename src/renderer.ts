@@ -99,10 +99,10 @@ export class Renderer {
     const page = await this.browser.newPage();
     if (this.config.wkmDebug) {
       page
-        .on("console", (msg) => console.log(`${timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
-        .on("pageerror", ({ msg }) => console.log(`${timestamp()} ${msg}`))
-        .on("response", (rs) => console.log(`${timestamp()} ${rs.status()} ${rs.url()}`))
-        .on("requestfailed", (rq) => console.log(`${timestamp()} ${rq.failure().errorText} ${rq.url()}`));
+        .on("console", (msg) => console.log(`${this.timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
+        .on("pageerror", ({ msg }) => console.log(`${this.timestamp()} ${msg}`))
+        .on("response", (rs) => console.log(`${this.timestamp()} ${rs.status()} ${rs.url()}`))
+        .on("requestfailed", (rq) => console.log(`${this.timestamp()} ${rq.failure().errorText} ${rq.url()}`));
     }
 
 
@@ -267,10 +267,10 @@ export class Renderer {
     const page = await this.browser.newPage();
     if (this.config.wkmDebug) {
       page
-        .on("console", (msg) => console.log(`${timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
-        .on("pageerror", ({ msg }) => console.log(`${timestamp()} ${msg}`))
-        .on("response", (rs) => console.log(`${timestamp()} ${rs.status()} ${rs.url()}`))
-        .on("requestfailed", (rq) => console.log(`${timestamp()} ${rq.failure().errorText} ${rq.url()}`));
+        .on("console", (msg) => console.log(`${this.timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
+        .on("pageerror", ({ msg }) => console.log(`${this.timestamp()} ${msg}`))
+        .on("response", (rs) => console.log(`${this.timestamp()} ${rs.status()} ${rs.url()}`))
+        .on("requestfailed", (rq) => console.log(`${this.timestamp()} ${rq.failure().errorText} ${rq.url()}`));
     }
 
     // Page may reload when setting isMobile
