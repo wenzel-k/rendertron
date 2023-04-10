@@ -92,6 +92,14 @@ export class Renderer {
     }
 
     const page = await this.browser.newPage();
+    if (this.config.wkmDebug) {
+      page
+        .on("console", (msg) => console.log(`${timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
+        .on("pageerror", ({ msg }) => console.log(`${timestamp()} ${msg}`))
+        .on("response", (rs) => console.log(`${timestamp()} ${rs.status()} ${rs.url()}`))
+        .on("requestfailed", (rq) => console.log(`${timestamp()} ${rq.failure().errorText} ${rq.url()}`));
+    }
+
 
     // Page may reload when setting isMobile
     // https://github.com/GoogleChrome/puppeteer/blob/v1.10.0/docs/api.md#pagesetviewportviewport
@@ -123,7 +131,9 @@ export class Renderer {
 
     page.evaluateOnNewDocument('customElements.forcePolyfill = true');
     page.evaluateOnNewDocument('ShadyDOM = {force: true}');
-    page.evaluateOnNewDocument('ShadyCSS = {shimcssproperties: true}');
+    if (!this.config.disableShimCssProperties) {
+      page.evaluateOnNewDocument('ShadyCSS = {shimcssproperties: true}');
+    }
 
     await page.setRequestInterception(true);
 
@@ -250,6 +260,13 @@ export class Renderer {
     timezoneId?: string
   ): Promise<Buffer> {
     const page = await this.browser.newPage();
+    if (this.config.wkmDebug) {
+      page
+        .on("console", (msg) => console.log(`${timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
+        .on("pageerror", ({ msg }) => console.log(`${timestamp()} ${msg}`))
+        .on("response", (rs) => console.log(`${timestamp()} ${rs.status()} ${rs.url()}`))
+        .on("requestfailed", (rq) => console.log(`${timestamp()} ${rq.failure().errorText} ${rq.url()}`));
+    }
 
     // Page may reload when setting isMobile
     // https://github.com/GoogleChrome/puppeteer/blob/v1.10.0/docs/api.md#pagesetviewportviewport
