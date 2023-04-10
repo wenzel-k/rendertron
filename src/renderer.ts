@@ -30,6 +30,11 @@ export class Renderer {
     this.browser = browser;
     this.config = config;
   }
+  
+  timestamp() {
+      return new Date().toLocaleString("de").replace(", ", "T").replace(/:/g, "-");
+  }
+
 
   private restrictRequest(requestUrl: string): boolean {
     const parsedUrl = url.parse(requestUrl);
