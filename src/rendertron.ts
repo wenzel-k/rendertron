@@ -47,7 +47,7 @@ export class Rendertron {
       const timestamp = `${date.toLocaleString("de")}.${date.getMilliseconds().toString().padStart(3, "0")}`;
       return timestamp;
     };
-    this.app.use(koaLogger((str, args) => {
+    this.app.use(koaLogger((str/*, args*/) => {
       console.log(`${timestamp()}${str}`);
     }))
     
