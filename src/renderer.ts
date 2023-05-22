@@ -97,6 +97,7 @@ export class Renderer {
     }
 
     const page = await this.browser.newPage();
+    page.setUserAgent(page.getUserAgent().replace("HeadlessChrome", "RendertronHeadlessChrome"));
     if (this.config.wkmDebug) {
       page
         .on("console", (msg) => console.log(`${this.timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
@@ -265,6 +266,7 @@ export class Renderer {
     timezoneId?: string
   ): Promise<Buffer> {
     const page = await this.browser.newPage();
+    page.setUserAgent(page.getUserAgent().replace("HeadlessChrome", "RendertronHeadlessChrome"));
     if (this.config.wkmDebug) {
       page
         .on("console", (msg) => console.log(`${this.timestamp()} ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`))
