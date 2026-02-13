@@ -42,6 +42,7 @@ export type Config = {
  
   disableShimCssProperties?: boolean;
   wkmDebug?: boolean;
+  wkmInkognitoContext?: boolean;
 };
 
 export class ConfigManager {
