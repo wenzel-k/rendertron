@@ -96,7 +96,16 @@ export class Renderer {
       }
     }
 
-    const page = await this.browser.newPage();
+    // NEU: Inkognito-Context erstellen wenn aktiviert
+    let context: puppeteer.BrowserContext | null = null;
+    if (this.config.wkmInkognitoContext) {
+      context = await this.browser.createIncognitoBrowserContext();
+    }
+
+    const page = context 
+      ? await context.newPage() 
+      : await this.browser.newPage();
+
     await page.setUserAgent((await this.browser.userAgent()).replace("HeadlessChrome", "RendertronHeadlessChrome"));
     if (this.config.wkmDebug) {
       page
@@ -177,6 +186,10 @@ export class Renderer {
       // This should only occur when the page is about:blank. See
       // https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#pagegotourl-options.
       await page.close();
+      // NEU: Inkognito-Context schließen wenn verwendet
+      if (context) {
+        await context.close();
+      }
       if (this.config.closeBrowser) {
         await this.browser.close();
       }
@@ -187,6 +200,10 @@ export class Renderer {
     // https://cloud.google.com/compute/docs/storing-retrieving-metadata.
     if (response.headers()['metadata-flavor'] === 'Google') {
       await page.close();
+      // NEU: Inkognito-Context schließen wenn verwendet
+      if (context) {
+        await context.close();
+      }
       if (this.config.closeBrowser) {
         await this.browser.close();
       }
@@ -246,6 +263,10 @@ export class Renderer {
     const result = (await page.content()) as string;
 
     await page.close();
+    // NEU: Inkognito-Context schließen wenn verwendet
+    if (context) {
+      await context.close();
+    }
     if (this.config.closeBrowser) {
       await this.browser.close();
     }
@@ -265,7 +286,16 @@ export class Renderer {
     options?: ScreenshotOptions,
     timezoneId?: string
   ): Promise<Buffer> {
-    const page = await this.browser.newPage();
+    // NEU: Inkognito-Context erstellen wenn aktiviert
+    let context: puppeteer.BrowserContext | null = null;
+    if (this.config.wkmInkognitoContext) {
+      context = await this.browser.createIncognitoBrowserContext();
+    }
+
+    const page = context 
+      ? await context.newPage() 
+      : await this.browser.newPage();
+
     await page.setUserAgent((await this.browser.userAgent()).replace("HeadlessChrome", "RendertronHeadlessChrome"));
     if (this.config.wkmDebug) {
       page
@@ -315,6 +345,10 @@ export class Renderer {
 
     if (!response) {
       await page.close();
+      // NEU: Inkognito-Context schließen wenn verwendet
+      if (context) {
+        await context.close();
+      }
       if (this.config.closeBrowser) {
         await this.browser.close();
       }
@@ -325,6 +359,10 @@ export class Renderer {
     // https://cloud.google.com/compute/docs/storing-retrieving-metadata.
     if (response.headers()['metadata-flavor'] === 'Google') {
       await page.close();
+      // NEU: Inkognito-Context schließen wenn verwendet
+      if (context) {
+        await context.close();
+      }
       if (this.config.closeBrowser) {
         await this.browser.close();
       }
@@ -340,6 +378,10 @@ export class Renderer {
     // https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md#pagescreenshotoptions
     const buffer = (await page.screenshot(screenshotOptions)) as Buffer;
     await page.close();
+    // NEU: Inkognito-Context schließen wenn verwendet
+    if (context) {
+      await context.close();
+    }
     if (this.config.closeBrowser) {
       await this.browser.close();
     }
